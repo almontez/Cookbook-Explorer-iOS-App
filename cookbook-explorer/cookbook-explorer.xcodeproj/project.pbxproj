@@ -9,13 +9,12 @@
 /* Begin PBXBuildFile section */
 		0B26203E2B866E8400CB35CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B26203D2B866E8400CB35CE /* AppDelegate.swift */; };
 		0B2620402B866E8400CB35CE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B26203F2B866E8400CB35CE /* SceneDelegate.swift */; };
-		0B2620422B866E8400CB35CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2620412B866E8400CB35CE /* ViewController.swift */; };
-		0B2620452B866E8400CB35CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2620432B866E8400CB35CE /* Main.storyboard */; };
 		0B2620472B866E8500CB35CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B2620462B866E8500CB35CE /* Assets.xcassets */; };
 		0B26204A2B866E8500CB35CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2620482B866E8500CB35CE /* LaunchScreen.storyboard */; };
 		0B2620552B866E8500CB35CE /* cookbook_explorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2620542B866E8500CB35CE /* cookbook_explorerTests.swift */; };
 		0B26205F2B866E8500CB35CE /* cookbook_explorerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B26205E2B866E8500CB35CE /* cookbook_explorerUITests.swift */; };
 		0B2620612B866E8500CB35CE /* cookbook_explorerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2620602B866E8500CB35CE /* cookbook_explorerUITestsLaunchTests.swift */; };
+		0B96DDC32B86981E00FF18CC /* RecipesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96DDC22B86981E00FF18CC /* RecipesListController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +38,6 @@
 		0B26203A2B866E8400CB35CE /* cookbook-explorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cookbook-explorer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B26203D2B866E8400CB35CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B26203F2B866E8400CB35CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0B2620412B866E8400CB35CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		0B2620442B866E8400CB35CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B2620462B866E8500CB35CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B2620492B866E8500CB35CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B26204B2B866E8500CB35CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +46,7 @@
 		0B26205A2B866E8500CB35CE /* cookbook-explorerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "cookbook-explorerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B26205E2B866E8500CB35CE /* cookbook_explorerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cookbook_explorerUITests.swift; sourceTree = "<group>"; };
 		0B2620602B866E8500CB35CE /* cookbook_explorerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cookbook_explorerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0B96DDC22B86981E00FF18CC /* RecipesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +99,7 @@
 			children = (
 				0B26203D2B866E8400CB35CE /* AppDelegate.swift */,
 				0B26203F2B866E8400CB35CE /* SceneDelegate.swift */,
-				0B2620412B866E8400CB35CE /* ViewController.swift */,
-				0B2620432B866E8400CB35CE /* Main.storyboard */,
+				0B96DDC22B86981E00FF18CC /* RecipesListController.swift */,
 				0B2620462B866E8500CB35CE /* Assets.xcassets */,
 				0B2620482B866E8500CB35CE /* LaunchScreen.storyboard */,
 				0B26204B2B866E8500CB35CE /* Info.plist */,
@@ -233,7 +230,6 @@
 			files = (
 				0B26204A2B866E8500CB35CE /* LaunchScreen.storyboard in Resources */,
 				0B2620472B866E8500CB35CE /* Assets.xcassets in Resources */,
-				0B2620452B866E8400CB35CE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,8 +254,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B2620422B866E8400CB35CE /* ViewController.swift in Sources */,
 				0B26203E2B866E8400CB35CE /* AppDelegate.swift in Sources */,
+				0B96DDC32B86981E00FF18CC /* RecipesListController.swift in Sources */,
 				0B2620402B866E8400CB35CE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,14 +293,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0B2620432B866E8400CB35CE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0B2620442B866E8400CB35CE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		0B2620482B866E8500CB35CE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -447,7 +435,6 @@
 				INFOPLIST_FILE = "cookbook-explorer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -475,7 +462,6 @@
 				INFOPLIST_FILE = "cookbook-explorer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
