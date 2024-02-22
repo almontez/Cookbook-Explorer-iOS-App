@@ -15,6 +15,7 @@
 		0B26205F2B866E8500CB35CE /* cookbook_explorerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B26205E2B866E8500CB35CE /* cookbook_explorerUITests.swift */; };
 		0B2620612B866E8500CB35CE /* cookbook_explorerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2620602B866E8500CB35CE /* cookbook_explorerUITestsLaunchTests.swift */; };
 		0B96DDC32B86981E00FF18CC /* RecipesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96DDC22B86981E00FF18CC /* RecipesListController.swift */; };
+		0B96DDC52B869E1F00FF18CC /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96DDC42B869E1F00FF18CC /* Recipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		0B26205E2B866E8500CB35CE /* cookbook_explorerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cookbook_explorerUITests.swift; sourceTree = "<group>"; };
 		0B2620602B866E8500CB35CE /* cookbook_explorerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cookbook_explorerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0B96DDC22B86981E00FF18CC /* RecipesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListController.swift; sourceTree = "<group>"; };
+		0B96DDC42B869E1F00FF18CC /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				0B2620462B866E8500CB35CE /* Assets.xcassets */,
 				0B2620482B866E8500CB35CE /* LaunchScreen.storyboard */,
 				0B26204B2B866E8500CB35CE /* Info.plist */,
+				0B96DDC42B869E1F00FF18CC /* Recipe.swift */,
 			);
 			path = "cookbook-explorer";
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				0B26203E2B866E8400CB35CE /* AppDelegate.swift in Sources */,
 				0B96DDC32B86981E00FF18CC /* RecipesListController.swift in Sources */,
 				0B2620402B866E8400CB35CE /* SceneDelegate.swift in Sources */,
+				0B96DDC52B869E1F00FF18CC /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
