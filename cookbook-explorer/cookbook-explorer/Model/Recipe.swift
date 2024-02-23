@@ -20,11 +20,5 @@ struct Recipe {
     struct Ingredient {
         var name: String
         var quantity: String
-        var quantityInGrams: String {
-            return String(quantity.split(separator: "/")[0])
-        }
-        var quantityInOz: String {
-            return String(quantity.split(separator: "/")[1])
-        }
     }
 }
