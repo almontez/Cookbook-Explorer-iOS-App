@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecipesJsonDecoder: Decodable {
+struct RecipesJson: Decodable {
     
     private enum CodingKeys: String, CodingKey {
         case meals

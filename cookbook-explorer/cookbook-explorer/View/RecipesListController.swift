@@ -9,24 +9,20 @@ import UIKit
 
 class RecipesListController: UIViewController {
     
+    let networkManager = NetworkManager()
     var recipes = [Recipe]()
     
     override func viewDidLoad() {
+        let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert")!
+        let recipesListRequest = RecipesAPIRequest(url: url)
+        
         Task {
-            let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert")
-//            let url = URL(string: "https://themealdb.com/api/json/v1/1/lookup.php?i=52768")
-            
-            let (data, response) = try await URLSession.shared.data(from: url!)
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
-                print("UGH")
-                return
+            do {
+                let recipesData = try await networkManager.fetchData(for: recipesListRequest)
+                print(recipesData.recipes)
+            } catch {
+                print(error.localizedDescription)
             }
-            
-            let decoder = JSONDecoder()
-            let abc = try decoder.decode(RecipesJsonDecoder.self, from: data)
-            print(abc)
         }
     }
 
