@@ -9,7 +9,7 @@ import Foundation
 
 struct NetworkManager {
     
-    enum APIRequestError: Error {
+    enum NetworkError: Error {
         case networkError
     }
     
@@ -18,7 +18,7 @@ struct NetworkManager {
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
-            throw APIRequestError.networkError
+            throw NetworkError.networkError
         }
         
         let decodedResponse = try request.decodeResponse(data: data)

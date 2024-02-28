@@ -152,6 +152,7 @@
 		0BA8F82A2B8D5BCA0047AACC /* APIRequests */ = {
 			isa = PBXGroup;
 			children = (
+				0BA8F82C2B8D5C150047AACC /* APIRequestProtocol.swift */,
 				0BA8F8252B8D566F0047AACC /* RecipesAPIRequest.swift */,
 				0BA8F8272B8D5B130047AACC /* RecipeImageAPIRequest.swift */,
 			);
@@ -170,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				0BA8F8232B8D49190047AACC /* NetworkManager.swift */,
-				0BA8F82C2B8D5C150047AACC /* APIRequestProtocol.swift */,
 				0BA8F82A2B8D5BCA0047AACC /* APIRequests */,
 				0BA8F8292B8D5BAE0047AACC /* CustomDecoders */,
 			);
