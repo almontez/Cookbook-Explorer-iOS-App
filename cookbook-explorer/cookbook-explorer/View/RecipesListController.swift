@@ -10,6 +10,8 @@ import UIKit
 class RecipesListController: UIViewController {
     
     var collectionView: UICollectionView!
+    var dataSource: DataSource!
+    
     let networkManager = NetworkManager()
     var recipes = [Recipe]()
     
@@ -19,11 +21,10 @@ class RecipesListController: UIViewController {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: listLayout)
         collectionView.alwaysBounceVertical = true
+        // TODO: Update background color to .white!!
         collectionView.backgroundColor = .red
         
         collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: "ListCell")
-        collectionView.dataSource = self
-        collectionView.delegate = self
         
         self.view = collectionView
     }
@@ -34,35 +35,42 @@ class RecipesListController: UIViewController {
                 let recipesListRequest = RecipesAPIRequest(url: URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert")!)
                 let recipesData = try await networkManager.fetchData(for: recipesListRequest)
                 recipes = recipesData.recipes
-                collectionView.reloadData()
+                createDataSource()
+                updateSnapshot()
             } catch {
-                print(error.localizedDescription)
+                // TODO: Create custom error view
+                print("Error: \(error.localizedDescription)")
             }
         }
     }
 }
 
-extension RecipesListController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("HERE I AM")
+// MARK: - DiffableDataSource
+extension RecipesListController {
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Recipe>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Recipe>
+    
+    enum Section {
+        case main
     }
     
-}
-
-extension RecipesListController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recipes.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let recipe = recipes[indexPath.item]
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCell", for: indexPath) as? UICollectionViewListCell else {
-            fatalError("Unable to dequeue cell")
+    func createDataSource() {
+        dataSource = DataSource(collectionView: collectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, recipe: Recipe) in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCell", for: indexPath) as? UICollectionViewListCell else {
+                fatalError("Unable to dequeue cell")
+            }
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = recipe.name
+            cell.contentConfiguration = contentConfiguration
+            return cell
         }
-        var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = recipe.name
-        cell.contentConfiguration = contentConfiguration
-        return cell
+    }
+    
+    func updateSnapshot() {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(recipes)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
