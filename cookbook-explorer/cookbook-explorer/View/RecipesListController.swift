@@ -16,15 +16,14 @@ class RecipesListController: UIViewController {
     var recipes = [Recipe]()
     
     override func loadView() {
-        let layoutConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebarPlain)
+        let layoutConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
         let listLayout = UICollectionViewCompositionalLayout.list(using: layoutConfiguration)
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: listLayout)
         collectionView.alwaysBounceVertical = true
-        // TODO: Update background color to .white!!
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = .white
         
-        collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: "ListCell")
+        collectionView.delegate = self
         
         self.view = collectionView
     }
@@ -35,13 +34,13 @@ class RecipesListController: UIViewController {
                 let recipesListRequest = RecipesAPIRequest(url: URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert")!)
                 let recipesData = try await networkManager.fetchData(for: recipesListRequest)
                 recipes = recipesData.recipes
-                createDataSource()
-                updateSnapshot()
+                applySnapshot()
             } catch {
                 // TODO: Create custom error view
                 print("Error: \(error.localizedDescription)")
             }
         }
+        createDataSource()
     }
 }
 
@@ -55,22 +54,35 @@ extension RecipesListController {
     }
     
     func createDataSource() {
+        let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
+        
         dataSource = DataSource(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, recipe: Recipe) in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCell", for: indexPath) as? UICollectionViewListCell else {
-                fatalError("Unable to dequeue cell")
-            }
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = recipe.name
-            cell.contentConfiguration = contentConfiguration
-            return cell
+            return collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration, for: indexPath, item: recipe)
         }
     }
     
-    func updateSnapshot() {
+    func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, recipe: Recipe) {
+        var contentConfiguration = cell.defaultContentConfiguration()
+        contentConfiguration.text = recipe.name
+        cell.contentConfiguration = contentConfiguration
+        cell.accessories = [.disclosureIndicator()]
+    }
+    
+    func applySnapshot() {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(recipes)
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension RecipesListController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let recipe = dataSource.itemIdentifier(for: indexPath) else { return }
+        let recipeDetailsController = RecipeDetailsController(recipe: recipe)
+        navigationController?.pushViewController(recipeDetailsController, animated: true)
     }
 }
