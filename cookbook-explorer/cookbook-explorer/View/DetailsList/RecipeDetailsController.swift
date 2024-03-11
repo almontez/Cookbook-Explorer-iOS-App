@@ -19,13 +19,12 @@ class RecipeDetailsController: UICollectionViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented. use init(recipe:)")
+        fatalError("Use init(recipe:)")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.allowsSelection = false
-        print(recipe)
         configureNavigationBar()
         createDataSource()
         applySnapshot()
@@ -41,11 +40,17 @@ class RecipeDetailsController: UICollectionViewController {
 
 // MARK: - DiffableDataSource
 extension RecipeDetailsController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Recipe>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Recipe>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Row>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Row>
     
     enum Section {
-        case name
+        case recipeName
+        case ingredients
+        case instructions
+    }
+    
+    enum Row {
+        case recipeName
         case ingredients
         case instructions
     }
@@ -54,19 +59,35 @@ extension RecipeDetailsController {
         let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
         
         dataSource = DataSource(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, recipe: Recipe) in
+            (collectionView: UICollectionView, indexPath: IndexPath, row: Row) in
             return collectionView.dequeueConfiguredReusableCell(
-                using: cellRegistration, for: indexPath, item: recipe)
+                using: cellRegistration, for: indexPath, item: row)
         }
     }
     
-    func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, recipe: Recipe) {
+    func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, row: Row) {
         var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = recipe.name
+        
+        switch row {
+        case .recipeName: contentConfiguration.text = recipe.name
+        case .ingredients: contentConfiguration.text = text(for: recipe.ingredients)
+        case .instructions: contentConfiguration.text = recipe.instructions
+        }
+        
         cell.contentConfiguration = contentConfiguration
     }
     
     func applySnapshot() {
         var snapshot = Snapshot()
+        snapshot.appendSections([.recipeName, .ingredients, .instructions])
+        snapshot.appendItems([Row.recipeName], toSection: .recipeName)
+        snapshot.appendItems([Row.ingredients], toSection: .ingredients)
+        snapshot.appendItems([Row.instructions], toSection: .instructions)
+        dataSource.apply(snapshot)
+    }
+    
+    func text(for ingredients: [Ingredient]) -> String {
+        print(ingredients)
+        return "I'm working on it"
     }
 }
