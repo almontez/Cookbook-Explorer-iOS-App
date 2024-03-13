@@ -25,7 +25,6 @@ class RecipeDetailsController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.allowsSelection = false
-        print(recipe)
         configureNavigationBar()
         createDataSource()
         applySnapshot()
@@ -41,57 +40,51 @@ class RecipeDetailsController: UICollectionViewController {
 
 // MARK: - DiffableDataSource
 extension RecipeDetailsController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Row>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Row>
-    
-    enum Section {
-        case recipeName
-        case ingredients
-        case instructions
-    }
-    
-    enum Row: Hashable {
-        case recipeName
-        case ingredients
-        case instructions
-    }
+    typealias sectionItem = Section.SectionItem
+    typealias section = Section.SectionName
+    typealias DataSource = UICollectionViewDiffableDataSource<section, sectionItem>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<section, sectionItem>
     
     func createDataSource() {
         let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
         
         dataSource = DataSource(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, row: Row) in
+            (collectionView: UICollectionView, indexPath: IndexPath, item: sectionItem) in
             return collectionView.dequeueConfiguredReusableCell(
-                using: cellRegistration, for: indexPath, item: row)
+                using: cellRegistration, for: indexPath, item: item)
         }
     }
     
-    func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, row: Row) {
+    func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, item: sectionItem) {
         var contentConfiguration = cell.defaultContentConfiguration()
         
-        switch row {
-        case .recipeName: contentConfiguration.text = recipe.name
-        case .ingredients: contentConfiguration.text = text(for: recipe.ingredients)
-        case .instructions: contentConfiguration.text = recipe.instructions
+        switch item {
+        case .title(let text): 
+            contentConfiguration.text = text
+        case .ingredient(let ingredient): 
+            contentConfiguration.prefersSideBySideTextAndSecondaryText = true
+            contentConfiguration.text = ingredient.quantity
+            contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
+            contentConfiguration.secondaryText = ingredient.name
+            contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .body)
+        case .instruction(let text):
+            contentConfiguration.text = text
         }
         
         cell.contentConfiguration = contentConfiguration
     }
-    
+        
     func applySnapshot() {
         var snapshot = Snapshot()
         snapshot.appendSections([.recipeName, .ingredients, .instructions])
-        snapshot.appendItems([Row.recipeName], toSection: .recipeName)
-        snapshot.appendItems([Row.ingredients], toSection: .ingredients)
-        snapshot.appendItems([Row.instructions], toSection: .instructions)
-        dataSource.apply(snapshot)
-    }
-    
-    func text(for ingredientsList: [Recipe.Ingredient]) -> String {
-        if let ingredient = ingredientsList.first {
-            return ingredient.quantity + " " + ingredient.name
+        
+        snapshot.appendItems([sectionItem.title(recipe.name)], toSection: .recipeName)
+        snapshot.appendItems([sectionItem.instruction(recipe.instructions!)], toSection: .instructions)
+        
+        recipe.ingredients.forEach { (ingredient) in
+            snapshot.appendItems([sectionItem.ingredient(ingredient)], toSection: .ingredients)
         }
         
-        return "No ingredients found"
+        dataSource.apply(snapshot)
     }
 }

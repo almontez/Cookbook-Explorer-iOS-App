@@ -16,11 +16,6 @@ struct Recipe {
     var instructions: String?
     var tags: String?
     var ingredients: [Ingredient] = []
-    
-    struct Ingredient {
-        var name: String
-        var quantity: String
-    }
 }
 
 extension Recipe: Hashable {
@@ -32,3 +27,7 @@ extension Recipe: Hashable {
         hasher.combine(id)
     }
 }
+
+
+
+
