@@ -25,6 +25,7 @@ class RecipeDetailsController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.allowsSelection = false
+        print(recipe)
         configureNavigationBar()
         createDataSource()
         applySnapshot()
@@ -49,7 +50,7 @@ extension RecipeDetailsController {
         case instructions
     }
     
-    enum Row {
+    enum Row: Hashable {
         case recipeName
         case ingredients
         case instructions
@@ -86,8 +87,11 @@ extension RecipeDetailsController {
         dataSource.apply(snapshot)
     }
     
-    func text(for ingredients: [Ingredient]) -> String {
-        print(ingredients)
-        return "I'm working on it"
+    func text(for ingredientsList: [Recipe.Ingredient]) -> String {
+        if let ingredient = ingredientsList.first {
+            return ingredient.quantity + " " + ingredient.name
+        }
+        
+        return "No ingredients found"
     }
 }
