@@ -13,7 +13,8 @@ class RecipeDetailsController: UICollectionViewController {
     
     init(recipe: Recipe) {
         self.recipe = recipe
-        let listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        listConfiguration.headerMode = .supplementary
         let listLayout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
         super.init(collectionViewLayout: listLayout)
     }
@@ -40,18 +41,35 @@ class RecipeDetailsController: UICollectionViewController {
 
 // MARK: - DiffableDataSource
 extension RecipeDetailsController {
-    typealias sectionItem = Section.SectionItem
     typealias section = Section.SectionName
+    typealias sectionItem = Section.SectionItem
     typealias DataSource = UICollectionViewDiffableDataSource<section, sectionItem>
     typealias Snapshot = NSDiffableDataSourceSnapshot<section, sectionItem>
     
     func createDataSource() {
         let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
         
+        let headerRegistration = UICollectionView.SupplementaryRegistration
+            <UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) { supplementaryView, string, indexPath in
+                let headerTitle = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+
+                var configuration = supplementaryView.defaultContentConfiguration()
+                configuration.text = "\(headerTitle)"
+                configuration.textProperties.font = .boldSystemFont(ofSize: 16)
+                configuration.textProperties.color = .darkGray
+                
+                supplementaryView.contentConfiguration = configuration
+        }
+        
         dataSource = DataSource(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, item: sectionItem) in
             return collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration, for: indexPath, item: item)
+        }
+        
+        dataSource.supplementaryViewProvider = { collectionView, elementKind, indexPath in
+            return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration,
+                                                                         for: indexPath)
         }
     }
     
@@ -73,12 +91,12 @@ extension RecipeDetailsController {
         
         cell.contentConfiguration = contentConfiguration
     }
-        
+    
     func applySnapshot() {
         var snapshot = Snapshot()
-        snapshot.appendSections([.recipeName, .ingredients, .instructions])
+        snapshot.appendSections([section.title, .ingredients, .instructions])
         
-        snapshot.appendItems([sectionItem.title(recipe.name)], toSection: .recipeName)
+        snapshot.appendItems([sectionItem.title(recipe.name)], toSection: section.title)
         snapshot.appendItems([sectionItem.instruction(recipe.instructions!)], toSection: .instructions)
         
         recipe.ingredients.forEach { (ingredient) in
