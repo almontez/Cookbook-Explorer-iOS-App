@@ -10,7 +10,7 @@ import Foundation
 struct Section {
     
     enum SectionName {
-        case recipeName
+        case title
         case ingredients
         case instructions
     }
