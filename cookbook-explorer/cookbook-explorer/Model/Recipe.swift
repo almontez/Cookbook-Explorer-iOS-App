@@ -16,9 +16,18 @@ struct Recipe {
     var instructions: String?
     var tags: String?
     var ingredients: [Ingredient] = []
+}
+
+extension Recipe: Hashable {
+    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        lhs.id == rhs.id
+    }
     
-    struct Ingredient {
-        var name: String
-        var quantity: String
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
+
+
+
+
